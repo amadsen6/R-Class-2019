@@ -372,15 +372,15 @@ if(FxH > Fx){
 ## Output plot
 xx = 1:n
 xxx = 1:nH
-plot(xx, f, col = "black", pch = 17)
+plot(xx, f, col = "black", xlim = c(xmin = 0, xmax = 30), ylim = c(ymin = 0, ymax = 100), pch = 4, xlab = '', ylab = '')
 par(new = TRUE)
-plot(xxx, FH, col = "blue", pch = 17)
-abline(F00, col = "black", pch = 19)
-abline(F00X, col = "red", pch = 19)
-abline(F00H, col = "blue", pch = 19)
-
-plot(Sim[,2], Sim[,1], col = "black", pch = 20, xlab = 'Time Step', ylab = 'Fitness')
+plot(xxx, FH, xlim = c(xmin = 0, xmax = 30), ylim = c(ymin = 0, ymax = 100), col = "blue", pch = 4, xlab = '', ylab = '')
+abline(h = F00, col = "black", pch = 19)
+abline(h = F00X, col = "red", pch = 19)
+abline(h = F00H, col = "blue", pch = 19)
 par(new = TRUE)
-plot(SimX[,2], SimX[,1], col = "black", pch = 20, xlab = '', ylab = '')
+plot(Sim[,2], Sim[,1], xlim = c(xmin = 0, xmax = 30), ylim = c(ymin = 0, ymax = 100), col = "black", pch = 20, xlab = 'Time Step', ylab = 'Fitness')
 par(new = TRUE)
-plot(SimH[,2], SimH[,1], col = "black", pch = 20, xlab = '', ylab = '')
+plot(SimX[,2], SimX[,1], xlim = c(xmin = 0, xmax = 30), ylim = c(ymin = 0, ymax = 100), col = "red", pch = 20, xlab = '', ylab = '')
+par(new = TRUE)
+plot(SimH[,2], SimH[,1], xlim = c(xmin = 0, xmax = 30), ylim = c(ymin = 0, ymax = 100), col = "blue", pch = 20, xlab = '', ylab = '')
