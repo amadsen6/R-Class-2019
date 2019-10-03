@@ -127,7 +127,7 @@ for(kk in 2:nH){
 }
 
 Sim = matrix(0, nrow = m, ncol = 2)
-Cumbeta = seq(1,res)
+Cumbeta = rep(0,res)
 Cumbeta[1] = beta[1]/res
 for(i in 2:res){
   Cumbeta[i] = Cumbeta[i-1] + beta[i]/res
@@ -172,9 +172,9 @@ betaH <- stuffH[[1]]
 pH <- stuffH[[2]]
 qH <- stuffH[[3]]
 
-FH = seq(1,nH)
-PH = seq(1,nH)
-IH = seq(1,nH)
+FH = rep(0,nH)
+PH = rep(0,nH)
+IH = rep(0,nH)
 
 for(i in nH:1){
   prod = 1
@@ -254,8 +254,8 @@ par(new = TRUE)
 plot(yy, FetaH, col = "red", xlim = c(xmin = 0, xmax = Fx), ylim = c(ymin = 0, ymax = maxx), xlab = 'Patch Fitness', ylab = 'Frequency density of patch fitnesses')
 
 ## Calculate functions with pre-HIREC thresholds but post-HIREC parameters 
-PX = seq(1,nH)
-IX = seq(1,nH)
+PX = rep(0,nH)
+IX = rep(0,nH)
 for(i in 1:nH){
   frac = f[i]/FxH
   if(frac > 1){
