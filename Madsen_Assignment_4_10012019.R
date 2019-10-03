@@ -165,22 +165,24 @@ FitmeanAndStepmean = colMeans(Sim)
 EmFitMean = FitmeanAndStepmean[1]
 EmStopMean = FitmeanAndStepmean[2]
 
-stuff <- BetaVec(FxH,aH,bH,res)## need to redefine? source has [pH qH betaH] =
-betaH <- stuff[[1]]
-pH <- stuff[[2]]
-qH <- stuff[[3]]
+#####
+## Calculate functions for the adapted post-HIREC world
+stuffH <- BetaVec(FxH,aH,bH,res)
+betaH <- stuffH[[1]]
+pH <- stuffH[[2]]
+qH <- stuffH[[3]]
 
 FH = seq(1,nH)
 PH = seq(1,nH)
 IH = seq(1,nH)
 
-for(i in 1:nH){
-  index = nH - (i-1)
+for(i in nH:1){
   prod = 1
-  for(j in index:nH-1){
+  for(j in i:nH-1){
     if(j > i){
       prod = prod*(1 - hH*PH[j])
-      step = sH^(j-i+1)*hH*PH[j+1]*(IH[j+1]-((j+1)^cH - i^cH)*delH)
+      }
+      step = (sH^(j-i+1))*hH*PH[j+1]*(IH[j+1]-(((j+1)^cH) - (i^cH))*delH)
       if(step < 0){
         step = 0
       }
@@ -193,11 +195,10 @@ for(i in 1:nH){
     ii = ceiling(res*frac)
     if(ii == 0){
       ii = 1
-    }
   }
   jj = res*frac - floor(res*frac)
-  PH[i] = pH[ii]
-  IH[i] = qH[ii]
+  PH[i] = pH[ii] - (betaH[ii]/res)*jj
+  IH[i] = qH[ii] - (betaH[ii]/res)*((ii-0.5)/res)*FxH*jj
 }
 
 prod = 1
@@ -206,7 +207,7 @@ for(j in 0:(nH-1)){
   if(j < 0){
     prod = prod*(1-hH*PH[j])
   }
-  step = sH^(j+1)*hH*PH[j+1]*(IH[j+1]-((j+1)^cH)*delH)*prod
+  step = (sH^(j+1))*hH*PH[j+1]*(IH[j+1]-((j+1)^cH)*delH)*prod
   if(step < 0){
     step = 0
   }
@@ -221,10 +222,10 @@ for(kk in 2:nH){
 }
 
 ## Pre-HIREC and Post-HIREC fitness distributions
-bet = seq(1,res)
-betH = seq(1,res)
-beta = seq(1,res)
-betaH = seq(1,res)
+bet = rep(0,res)
+betH = rep(0,res)
+beta = rep(0,res)
+betaH = rep(0,res)
 x = seq(from = 0.5/res, to = (res-0.5)/res, by = 1/res)
 xx = x*Fx
 yy = x*FxH
@@ -248,8 +249,9 @@ if(maxF > maxFH){
   maxx = maxFH
 }
 
-plot(xx, Feta, col = "black")
-plot(yy, FetaH, col = "red")
+plot(xx, Feta, col = "black", xlim = c(xmin = 0, xmax = Fx), ylim = c(ymin = 0, ymax = maxx), xlab = '', ylab = '')
+par(new = TRUE)
+plot(yy, FetaH, col = "red", xlim = c(xmin = 0, xmax = Fx), ylim = c(ymin = 0, ymax = maxx), xlab = 'Patch Fitness', ylab = 'Frequency density of patch fitnesses')
 
 ## Calculate functions with pre-HIREC thresholds but post-HIREC parameters 
 PX = seq(1,nH)
